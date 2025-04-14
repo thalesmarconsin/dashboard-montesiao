@@ -1,0 +1,101 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="titulo-form">
+    <mat-toolbar>
+      <span> {{ titulo }}</span>
+    </mat-toolbar>
+  </div>
+  <br />
+  <form [formGroup]="form" class="form-container">
+    @if(id && id > 0){
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Id Curso </mat-label>
+          <input matInput formControlName="id" />
+        </mat-form-field>
+      </div>
+    </div>
+
+    }
+
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nome</mat-label>
+          <input matInput formControlName="nome" required />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Tipo</mat-label>
+          <input matInput formControlName="tipo" />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Horario</mat-label>
+          <input matInput formControlName="horario" required />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field>
+          <mat-label>Data Inicio:</mat-label>
+          <input
+            matInput
+            formControlName="data_inicio"
+            [matDatepicker]="picker"
+          />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field>
+          <mat-label>Data Fim:</mat-label>
+          <input
+            matInput
+            formControlName="data_fim"
+            [matDatepicker]="picker2"
+          />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker2"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <button
+        (click)="guardarForm()"
+        mat-raised-button
+        color="primary"
+        [disabled]="!form.dirty || form.invalid || form.pending"
+      >
+        Cadastrar
+      </button>
+      <button (click)="redireccionarGrid()" mat-raised-button color="warn">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,40 @@
+<mat-toolbar color="primary">
+  <div routerLink="/dashboard">
+    <span class="inicio">Monte Sião</span>
+  </div>
+  <span class="example-spacer"></span>
+  <span>{{ nome }}</span>
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="menu"
+    aria-label="Example icon-button with a menu"
+  >
+    <mat-icon>edit_note</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/admin/membros">
+      <mat-icon>person</mat-icon>
+      <span>Membros</span>
+    </button>
+    <button mat-menu-item routerLink="/admin/ministerios">
+      <mat-icon>school</mat-icon>
+      <span>Ministérios</span>
+    </button>
+
+    <button mat-menu-item routerLink="/dashboard">
+      <mat-icon>bar_chart_4_bars</mat-icon>
+
+      <span>Dashboard</span>
+    </button>
+  </mat-menu>
+
+  <button
+    mat-icon-button
+    class="example-icon"
+    routerLink="/"
+    (click)="createSession()"
+    aria-label="Example icon-button with menu icon"
+  >
+    <mat-icon>logout</mat-icon>
+  </button>
+</mat-toolbar>

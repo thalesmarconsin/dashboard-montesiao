@@ -1,0 +1,83 @@
+.snackbar-error {
+    background-color: red;
+    color: white;
+  }
+  
+  .snackbar-success {
+    background-color: green;
+    color: white;
+  }
+  
+  .snackbar-warning {
+    background-color: yellow;
+    color: rgb(0, 0, 0);
+  }
+  
+
+  .mensaje-error-form {
+    color: crimson;
+  }
+
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  
+.mat-table {
+  width: 100%;
+}
+
+.titulo-form{
+  padding-bottom: 1.5rem;
+}
+mat-form-field {
+  width: 100%;
+  max-width: 80%;
+}
+
+.mat-form-field-carrito {
+  width: 20%;
+}
+table {
+  width: 100%;
+}
+
+.banner-img{
+  width: 100%;
+  height: 20px;
+}
+
+.example-card {
+  max-width: 250px;
+  display: table-row;
+  margin-top: 3rem;
+}
+
+.example-header-image {
+  background-size: cover;
+}
+.demo-section + .demo-section {
+  margin-top: 16px;
+}
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.inicio{
+  cursor: pointer;
+}
+
+.example-card-detalle {
+  max-width: 100%;
+  display: table-row;
+  margin-top: 3rem;
+}
+
+.articulo-detalle{
+  max-width: 400px;
+}
+.footer-detalle{
+  margin: 0 -16px -10px -1px !important;
+  margin-top: 30px !important;
+  
+}

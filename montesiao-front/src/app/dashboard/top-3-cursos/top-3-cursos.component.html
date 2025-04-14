@@ -1,0 +1,16 @@
+@if(datosD!.length > 0){
+
+<canvas
+  baseChart
+  [type]="'pie'"
+  [datasets]="pieChartDatasets"
+  [labels]="pieChartLabels"
+  [options]="pieChartOptions"
+  [plugins]="pieChartPlugins"
+  [legend]="pieChartLegend"
+>
+</canvas>
+
+} @else{
+<h2>No hay datos para mostrar grafico de Top 3 Cursos</h2>
+}

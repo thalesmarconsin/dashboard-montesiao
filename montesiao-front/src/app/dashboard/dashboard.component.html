@@ -1,0 +1,32 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <div *ngIf="membros && membros.length > 0; else noMembros">
+    <h2 class="grafico">Total de membros: {{ membros.length }}</h2>
+
+    <div *ngFor="let membro of membros" class="card-membro">
+      <h3>{{ membro.nome }} {{ membro.sobrenome }}</h3>
+      <p><strong>Email:</strong> {{ membro.email }}</p>
+      <p><strong>Idade:</strong> {{ membro.idade }}</p>
+      <p><strong>CPF:</strong> {{ membro.cpf }}</p>
+      <p><strong>Telefone:</strong> {{ membro.telefone || 'Não informado' }}</p>
+      <p><strong>Batizado:</strong> {{ membro.batizado ? 'Sim' : 'Não' }}</p>
+      <p><strong>Data do Batismo:</strong> {{ membro.data_batismo || 'N/A' }}</p>
+      <p><strong>Ministério:</strong> {{ membro.ministerio_id || 'Nenhum' }}</p>
+      <hr />
+    </div>
+  </div>
+
+  <ng-template #noMembros>
+    <p>Membros não encontrados.</p>
+  </ng-template>
+
+
+  <div *ngIf="ministerios && ministerios.length > 0; else noCursos">
+    <h2 class="grafico">Total cursos: {{ ministerios.length }}</h2>
+  </div>
+  
+  <ng-template #noCursos>
+    <p>Ministérios não encontrados</p>
+  </ng-template>
+</div>

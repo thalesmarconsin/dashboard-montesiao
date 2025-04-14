@@ -1,0 +1,14 @@
+# Node.js
+node_modules/
+
+# Dependencias generadas
+/dist/
+/coverage/
+/.npm/
+
+# Dependencias específicas del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Otros
+*.log

@@ -1,0 +1,106 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <mat-toolbar>
+    <span>Gerenciamento de Membros</span>
+    <span class="example-spacer"></span>
+    <button mat-raised-button color="primary" (click)="createMembro()">
+      Criar Membro
+    </button>
+  </mat-toolbar>
+
+  <div *ngIf="membros.length && dataSource; else noMembros">
+    <br />
+    <div class="main-body">
+      <mat-form-field class="mat-filter">
+        <mat-label>Filtrar</mat-label>
+        <input
+          matInput
+          (keyup)="filtrarGrid($event)"
+          placeholder="Insira os dados para filtrar"
+          #input
+        />
+        <button *ngIf="dataSource.filter" mat-icon-button matSuffix (click)="limparFiltro()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        <!-- ID -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+          <td mat-cell *matCellDef="let membro">{{ membro.id }}</td>
+        </ng-container>
+
+        <!-- Nome -->
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+          <td mat-cell *matCellDef="let membro">{{ membro.nome }}</td>
+        </ng-container>
+
+        <!-- Sobrenome -->
+        <ng-container matColumnDef="sobrenome">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Sobrenome</th>
+          <td mat-cell *matCellDef="let membro">{{ membro.sobrenome }}</td>
+        </ng-container>
+
+        <!-- Idade -->
+        <ng-container matColumnDef="idade">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Idade</th>
+          <td mat-cell *matCellDef="let membro">{{ membro.idade }}</td>
+        </ng-container>
+
+        <!-- Email -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+          <td mat-cell *matCellDef="let membro">{{ membro.email }}</td>
+        </ng-container>
+
+        <!-- CPF -->
+        <ng-container matColumnDef="cpf">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>CPF</th>
+          <td mat-cell *matCellDef="let membro">{{ membro.cpf }}</td>
+        </ng-container>
+
+        <!-- Telefone -->
+        <ng-container matColumnDef="telefone">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Telefone</th>
+          <td mat-cell *matCellDef="let membro">{{ membro.telefone }}</td>
+        </ng-container>
+
+        <!-- Ministerio -->
+        <ng-container matColumnDef="ministerio">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Ministério</th>
+          <td mat-cell *matCellDef="let membro">{{ membro.ministerio }}</td>
+        </ng-container>
+
+        <!-- Ações -->
+        <ng-container matColumnDef="acoes">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Ações</th>
+          <td mat-cell *matCellDef="let membro">
+            <button mat-icon-button color="primary" (click)="editMembro(membro.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteMembro(membro.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="colunasAMostrar"></tr>
+        <tr mat-row *matRowDef="let row; columns: colunasAMostrar"></tr>
+      </table>
+
+      <mat-paginator
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        aria-label="Selecione a página">
+      </mat-paginator>
+    </div>
+  </div>
+
+  <ng-template #noMembros>
+    <h3>Nenhum membro registrado!</h3>
+    <p>Clique no botão acima para adicionar o primeiro membro.</p>
+  </ng-template>
+</div>

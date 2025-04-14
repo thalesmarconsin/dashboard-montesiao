@@ -1,0 +1,110 @@
+<div class="body">
+  <form [formGroup]="form">
+    <div class="register">
+      <mat-card>
+        <div class="titulo-form">
+          <mat-toolbar>
+            <span> {{ titulo }}</span>
+          </mat-toolbar>
+        </div>
+        <br />
+        <mat-card-content>
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Nome</mat-label>
+                <input matInput formControlName="nome" required />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Sobrenome</mat-label>
+                <input matInput formControlName="sobrenome" required />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" required />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Senha</mat-label>
+                <input
+                  matInput
+                  formControlName="senha"
+                  [type]="hide ? 'password' : 'text'"
+                />
+                <button
+                  mat-icon-button
+                  matSuffix
+                  (click)="hide = !hide"
+                  [attr.aria-label]="'Hide senha'"
+                  [attr.aria-pressed]="hide"
+                >
+                  <mat-icon>{{
+                    hide ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+                @if(senha!.hasError('invalidsenha')){
+                <mat-error>
+                  A senha deve conter pelo menos um número, uma letra maiúscula e um caracter especial!</mat-error
+                >
+
+                }
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Confirmação de Senha</mat-label>
+                <input
+                  matInput
+                  formControlName="confirmacao"
+                  [type]="hideConfirmacao ? 'password' : 'text'"
+                />
+                <button
+                  mat-icon-button
+                  matSuffix
+                  (click)="hideConfirmacao = !hideConfirmacao"
+                  [attr.aria-label]="'Hide2 confirmacao'"
+                  [attr.aria-pressed]="hideConfirmacao"
+                >
+                  <mat-icon>{{
+                    hideConfirmacao ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button
+              (click)="guardarForm()"
+              mat-raised-button
+              color="primary"
+              [disabled]="!form.dirty || form.invalid || form.pending"
+            >
+              Cadastrar
+            </button>
+            <button (click)="redireccionar()" mat-raised-button color="warn">
+              Cancelar
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </form>
+</div>

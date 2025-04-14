@@ -1,0 +1,73 @@
+<mat-dialog-content>
+  <div>
+    <h2>Estudiante: {{ titulo }}</h2>
+
+    @if(ministerios.length && dataSource){
+    <br />
+    <p>Cursos Disponibles</p>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>nombre</th>
+        <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="horario">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Horario</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.horario }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="tipo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.tipo == "P" ? "Presencial" : "Virtual" }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Inicio - Fin</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.fecha_inicio.slice(0, 10) }} -
+          {{ element.fecha_fin.slice(0, 10) }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="checkbox">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox
+            (change)="toggleAllSelection()"
+            [checked]="isAllSelected()"
+          >
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="toggleSelection(row)"
+            [checked]="selection.isSelected(row)"
+          >
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnasAMostrar"></tr>
+    </table>
+    }
+    <mat-dialog-actions align="end">
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button (click)="onSubmit()" mat-raised-button color="primary">
+          Guardar
+        </button>
+        <button (click)="onClose()" mat-raised-button color="warn">
+          Cancelar
+        </button>
+      </div>
+    </mat-dialog-actions>
+  </div>
+</mat-dialog-content>

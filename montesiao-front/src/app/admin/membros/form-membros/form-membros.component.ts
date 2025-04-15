@@ -15,11 +15,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatRadioModule } from '@angular/material/radio';
 
 @Component({
   selector: 'app-form-membro',
   standalone: true,
-  imports: [MaterialModule, SharedModule, NavbarComponent, CommonModule, MatFormFieldModule, MatButtonToggleModule],
+  imports: [MaterialModule, SharedModule, NavbarComponent, CommonModule, MatFormFieldModule, MatButtonToggleModule, MatRadioModule],
   templateUrl: './form-membros.component.html',
   styleUrl: './form-membros.component.css',
 })
@@ -27,7 +28,7 @@ export class FormMembroComponent implements OnInit {
   form: FormGroup;
   id?: number;
   titulo: string = 'Cadastro de Membro';
-  ministerios: any[] = [];
+  ministerios: Ministerio[] = [];
 
   dataSource!: MatTableDataSource<Ministerio>;
   
@@ -54,13 +55,14 @@ export class FormMembroComponent implements OnInit {
       cpf: ['', [Validators.required, Validators.maxLength(11)]],
       email: ['', [Validators.required, Validators.email]],
       telefone: [''],
-      batizado: [false, Validators.requiredTrue],
       ministerio_id: ['', [Validators.required]],
     });
   }
 
   ngOnInit(): void {
     this.getMinisterios();
+
+    console.log(this.ministerios);
 
     this._activatedRoute.queryParams.subscribe((data) => {
       const { idMembro } = data;
@@ -87,25 +89,25 @@ export class FormMembroComponent implements OnInit {
   }
 
   getMinisterios() {
-      this._ministerioService.getMinisterios().subscribe({
-        next: (res: any) => {
-          console.log('Dados recebidos:', res);
-  
-          this.ministerios = res.ministerios || [];
-  
-          this.dataSource = new MatTableDataSource(this.ministerios);
-  
-          setTimeout(() => {
-            this.dataSource.sort = this.sort;
-            this.dataSource.paginator = this.paginator;
-          });
-        },
-        error: (error: any) => {
-          console.error('Erro ao recuperar dados:', error);
-          this._snackBarService.showErrorSnackbar('Erro ao recuperar dados!');
-        },
-      });
-    }
+    this._ministerioService.getMinisterios().subscribe({
+      next: (res: any) => {
+        console.log('Dados recebidos:', res);
+
+        this.ministerios = res.ministerios || [];
+
+        this.dataSource = new MatTableDataSource(this.ministerios);
+
+        setTimeout(() => {
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        });
+      },
+      error: (error: any) => {
+        console.error('Erro ao recuperar dados:', error);
+        this._snackBarService.showErrorSnackbar('Erro ao recuperar dados!');
+      },
+    });
+  }
 
   guardarForm() {
     const { nome, sobrenome, idade, cpf, email, telefone, ministerio_id } = this.form.value;
@@ -117,9 +119,10 @@ export class FormMembroComponent implements OnInit {
     idade,
     telefone,
     cpf,
-    ministerio_id
+    ministerio_id,
   };
 
+    console.log(dados)
     
     if (this.id && this.id > 0) {
       this.editMembro(dados);

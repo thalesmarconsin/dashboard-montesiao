@@ -28,8 +28,6 @@ class MemberController extends Controller
             'cpf' => 'required|unique:members',
             'email' => 'required|email|unique:members',
             'telefone' => 'nullable|string',
-            'batizado' => 'required|boolean',
-            'data_batismo' => 'nullable|date',
             'ministerio' => 'nullable|string'
         ]);
 
@@ -48,8 +46,6 @@ class MemberController extends Controller
             'cpf' => $request->cpf,
             'email' => $request->email,
             'telefone' => $request->telefone,
-            'batizado' => $request->batizado,
-            'data_batismo' => $request->data_batismo,
             'ministerio' => $request->ministerio
         ]);
 
@@ -95,8 +91,6 @@ class MemberController extends Controller
             'cpf' => 'required|string|size:11' . $id,
             'email' => 'required|email|unique:members,email,' . $id,
             'telefone' => 'nullable|string',
-            'batizado' => 'required|boolean',
-            'data_batismo' => 'nullable|date',
             'ministerio_id' => 'nullable|string'
         ]);
 

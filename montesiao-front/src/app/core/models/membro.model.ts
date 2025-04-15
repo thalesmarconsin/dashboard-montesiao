@@ -1,4 +1,3 @@
-import { Ministerio } from "./ministerio.model";
 
 export interface Membro {
   id: number;
@@ -8,8 +7,6 @@ export interface Membro {
   idade: number;
   cpf: string;
   telefone?: string;
-  batizado?: boolean;
-  data_batismo?: Date | string;
   ministerio_id?: number;
   created_at?: string;
   updated_at?: string;

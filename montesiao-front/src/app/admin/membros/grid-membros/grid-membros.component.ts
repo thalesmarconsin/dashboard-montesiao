@@ -11,10 +11,9 @@ import { MatSort } from '@angular/material/sort';
 import { Membro } from '../../../core/models/membro.model';
 import { MembroService } from '../../../core/services/membro.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import {
-  DialgoCursosAsociadosParams,
-  DialogCursosAsociadosComponent,
-} from '../dialog-ministerios/dialog-cursos-asociados.component';
+import { Ministerio } from '../../../core/models/ministerio.model';
+import { MinisterioService } from '../../../core/services/ministerio.service';
+
 @Component({
   selector: 'app-grid-membros',
   standalone: true,
@@ -26,6 +25,7 @@ export class GridMembroComponent implements OnInit {
   membros: Membro[] = [];
   dataSource!: MatTableDataSource<Membro>;
   idClienteLogin?: number;
+  ministerios: Ministerio[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -41,10 +41,10 @@ export class GridMembroComponent implements OnInit {
     'ministerio',
     'acoes'
   ];
-  private _ministerioService: any;
 
   constructor(
     private _membroService: MembroService,
+    private _ministerioService: MinisterioService,
     private _router: Router,
     private _snackBarService: SnackbarService,
     private activatedRoute: ActivatedRoute,
@@ -53,20 +53,50 @@ export class GridMembroComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMembros();
+    this.getMinisterios();
   }
 
-  getMembros(): void {
+  getMembros() {
+    // Fetch all members and map ministerio_id to the ministry name
     this._membroService.getMembros().subscribe({
       next: (res: any) => {
-        console.log('Resposta da API:', res);
-        this.membros = res.membros; // adaptado para pegar a chave correta
+        this.membros = res.membros.map((membro: Membro) => {
+          // Find the corresponding ministerio for each membro
+          const ministerio = this.ministerios.find(
+            (min) => min.id === membro.ministerio_id
+          );
+          return {
+            ...membro,
+            ministerio_nome: ministerio ? ministerio.nome : 'Não definido', 
+          };
+        });
         this.dataSource = new MatTableDataSource(this.membros);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
       error: (err) => {
-        console.error('Erro ao carregar membros:', err);
-      }
+        console.error('Error fetching members:', err);
+        this._snackBarService.showErrorSnackbar('Failed to load members!');
+      },
+    });
+  }
+
+  getMinisterios() {
+    this._ministerioService.getMinisterios().subscribe({
+      next: (res: any) => {
+        console.log('Dados recebidos:', res);
+
+        this.ministerios = res.ministerios || [];
+
+        setTimeout(() => {
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        });
+      },
+      error: (error: any) => {
+        console.error('Erro ao recuperar dados:', error);
+        this._snackBarService.showErrorSnackbar('Erro ao recuperar dados!');
+      },
     });
   }
 

@@ -16,9 +16,7 @@ class Member extends Model
         'cpf',
         'email',
         'telefone',
-        'data_batismo',
         'ministerio_id',
-        'batizado',
     ];
    
     public function courses()

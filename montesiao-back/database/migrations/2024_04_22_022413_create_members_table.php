@@ -16,8 +16,6 @@ return new class extends Migration
             $table->integer('idade');
             $table->string('cpf')->unique();
             $table->string('telefone')->nullable();
-            $table->boolean('batizado')->default(false);
-            $table->date('data_batismo')->nullable();
             $table->string('ministerio')->nullable();
             $table->timestamps();
         });

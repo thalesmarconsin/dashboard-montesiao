@@ -132,7 +132,7 @@ export class FormMembroComponent implements OnInit {
   }
 
   createMembro(dados: any) {
-    this._membroService.postMembro(dados).subscribe({
+    this._membroService.createMembro(dados).subscribe({
       next: () => {
         this._snackBarService.showSuccessSnackbar('Membro criado com sucesso!');
         this.redireccionarGrid();

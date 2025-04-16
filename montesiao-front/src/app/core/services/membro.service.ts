@@ -31,10 +31,6 @@ export class MembroService {
     return this.http.post(this.membroAddress, membro) as Observable<Membro>;
   }
 
-  postMembro(data: Membro): Observable<Membro> {
-    return this.http.post(this.membroAddress, data) as Observable<Membro>;
-  }
-
   updateMembro(id: number, membro: Membro): Observable<Membro> {
     return this.http.put(`${this.membroAddress}/${id}`, membro) as Observable<Membro>;
   }

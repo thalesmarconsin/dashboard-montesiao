@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('idade');
             $table->string('cpf')->unique();
             $table->string('telefone')->nullable();
-            $table->string('ministerio')->nullable();
+            $table->unsignedBigInteger('ministerio_id')->nullable();
             $table->timestamps();
         });
     }

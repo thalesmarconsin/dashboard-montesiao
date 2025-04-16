@@ -26,12 +26,12 @@ class DashboardController extends Controller
     {
 
        $data = DB::table('students as s')
-    ->join('course_student as cs', 's.id', '=', 'cs.student_id')
-    ->selectRaw('COUNT(*) AS total, s.nombre')
-    ->groupBy('s.nombre')
-    ->orderByDesc('total')
-    ->limit(3)
-    ->get();
+        ->join('course_student as cs', 's.id', '=', 'cs.student_id')
+        ->selectRaw('COUNT(*) AS total, s.nombre')
+        ->groupBy('s.nombre')
+        ->orderByDesc('total')
+        ->limit(3)
+        ->get();
 
         return response()->json($data, 200);
     }

@@ -19,9 +19,9 @@ class Member extends Model
         'ministerio_id',
     ];
    
-    public function courses()
+    public function ministries()
     {
-        return $this->belongsToMany('App/Models/Course') ;
+        return $this->belongsToMany(\App\Models\Ministry::class, 'ministry_member', 'member_id', 'ministry_id');
     }
 }
 

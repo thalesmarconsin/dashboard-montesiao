@@ -50,7 +50,6 @@ class AdministradorController extends Controller
         ];
 
         return response()->json($admin, 201);
-
     }
 
     public function show($email,$senha)

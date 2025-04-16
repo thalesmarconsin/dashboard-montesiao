@@ -4,43 +4,40 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\MinistryMember;
+use App\Models\Ministry;
 
 class MinistryMemberController extends Controller
 {
     public function show($id)
     {
-        $data = DB::table('ministries as m')
-            ->leftJoin('ministry_member as mm', function ($join) use ($id) {
-                $join->on('m.id', '=', 'mm.ministry_id')
-                     ->where('mm.member_id', '=', $id);
-            })
-            ->select(
-                'm.id',
-                'm.nome',
-                'm.horario',
-                'm.tipo',
-                'm.data_inicio',
-                'm.data_fim',
-                DB::raw("CASE WHEN mm.id > 0 THEN 'S' ELSE 'N' END AS checkbox")
-            )
-            ->distinct()
-            ->get();
+        $ministryMembers = MinistryMember::with('ministry')  
+            ->where('member_id', $id)
+            ->get()
+            ->map(function ($ministryMember) {
 
-        return response()->json($data, 200);
+                return [
+                    'id' => $ministryMember->ministry->id,
+                    'nome' => $ministryMember->ministry->nome,
+                    'horario' => $ministryMember->ministry->horario,
+                    'tipo' => $ministryMember->ministry->tipo,
+                    'data_inicio' => $ministryMember->ministry->data_inicio,
+                    'data_fim' => $ministryMember->ministry->data_fim,
+                    'checkbox' => 'S' 
+                ];
+            });
+
+        return response()->json($ministryMembers, 200);
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
-            '*.id' => 'required',
+            '*.id' => 'required|exists:ministries,id',  
         ]);
 
-        // Remove as relações antigas
         MinistryMember::where('member_id', $id)->delete();
 
-        // Cria novas relações
         $ministryMembersCriados = [];
         foreach ($request->all() as $ministryData) {
             $ministryMember = MinistryMember::create([

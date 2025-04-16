@@ -57,11 +57,11 @@ export class GridMembroComponent implements OnInit {
   }
 
   getMembros() {
-    // Fetch all members and map ministerio_id to the ministry name
     this._membroService.getMembros().subscribe({
       next: (res: any) => {
+        console.log('Dados recebidos:', res);
+        
         this.membros = res.membros.map((membro: Membro) => {
-          // Find the corresponding ministerio for each membro
           const ministerio = this.ministerios.find(
             (min) => min.id === membro.ministerio_id
           );

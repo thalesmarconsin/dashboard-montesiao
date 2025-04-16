@@ -39,7 +39,7 @@ export class NavbarComponent implements OnInit {
   createSession() {
     this._localStorageService.removeItem(this.localStorageKey);
     this.nome = undefined;
-    this.idAdministrador = 0;
+    this.idAdministrador = 1;
     this._router.navigate(['']);
   }
 }

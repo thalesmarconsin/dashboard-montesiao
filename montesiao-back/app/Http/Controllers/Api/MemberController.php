@@ -28,7 +28,7 @@ class MemberController extends Controller
             'cpf' => 'required|unique:members',
             'email' => 'required|email|unique:members',
             'telefone' => 'nullable|string',
-            'ministerio' => 'nullable|string'
+            'ministerio_id' => 'nullable|integer|exists:ministries,id',
         ]);
 
         if ($validator->fails()) {
@@ -46,7 +46,7 @@ class MemberController extends Controller
             'cpf' => $request->cpf,
             'email' => $request->email,
             'telefone' => $request->telefone,
-            'ministerio' => $request->ministerio
+            'ministerio_id' => $request->ministerio_id
         ]);
 
         return response()->json([
@@ -58,20 +58,14 @@ class MemberController extends Controller
 
     public function show($id)
     {
-        $member = Member::find($id);
-
-        if (!$member) {
-            return response()->json([
-                'mensagem' => 'Membro não encontrado',
-                'status' => 404
-            ], 404);
-        }
+        $member = Member::with('ministerio')->findOrFail($id);
 
         return response()->json([
             'membro' => $member,
             'status' => 200
         ], 200);
     }
+
 
     public function update(Request $request, $id)
     {
@@ -88,10 +82,10 @@ class MemberController extends Controller
             'nome' => 'required|max:255',
             'sobrenome' => 'required|max:255',
             'idade' => 'required|integer',
-            'cpf' => 'required|string|size:11' . $id,
+            'cpf' => 'required|string|size:11|unique:members,cpf,' . $id,
             'email' => 'required|email|unique:members,email,' . $id,
             'telefone' => 'nullable|string',
-            'ministerio_id' => 'nullable|string'
+            'ministerio_id' => 'nullable|integer|exists:ministries,id',
         ]);
 
         if ($validator->fails()) {
@@ -129,4 +123,5 @@ class MemberController extends Controller
             'status' => 200
         ], 200);
     }
+    
 }

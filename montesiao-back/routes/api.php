@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\MinistryController;
 use App\Http\Controllers\Api\DashboardController; 
 use App\Http\Controllers\Api\AdministradorController;
 use App\Http\Controllers\Api\MinistryMemberController; 
+use App\Http\Controllers\Api\EventoController;
 
 
 Route::get('/user', function (Request $request) {
@@ -41,4 +42,11 @@ Route::post('/administradores', [AdministradorController::class, 'store']);
 //dashboard
 Route::get('/dashboard/top-cursos', [DashboardController::class, 'topCursos']);
 Route::get('/dashboard/top-estudiantes', [DashboardController::class, 'topEstudiantes']);
+
+// eventos
+Route::get('/eventos', [EventoController::class, 'index']);
+Route::get('/eventos/{id}', [EventoController::class, 'show']);
+Route::post('/eventos', [EventoController::class, 'store']);
+Route::put('/eventos/{id}', [EventoController::class, 'update']);
+Route::delete('/eventos/{id}', [EventoController::class, 'destroy']);
 

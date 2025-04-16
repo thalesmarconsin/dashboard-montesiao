@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavbarComponent } from '../shared/components/navbar/navbar.component';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatLabel } from '@angular/material/form-field';
+import { MatCard, MatCardTitle, MatCardContent } from '@angular/material/card';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatCardHeader } from '@angular/material/card';
 import { MatSort } from '@angular/material/sort';
 import { SnackbarService } from '../shared/services/snackbar.service';
 import { Membro } from '../core/models/membro.model';
@@ -15,14 +16,15 @@ import { MatFormField } from '@angular/material/form-field';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [NavbarComponent, CommonModule],
+  imports: [NavbarComponent, CommonModule, MatCard, MatCardHeader, MatCardTitle, MatCardContent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent implements OnInit {
   membros: Membro[] = [];
   ministerios: Ministerio[] = [];
-  dataSource!: MatTableDataSource<Ministerio>;
+  dataSourceMinisterio!: MatTableDataSource<Ministerio>;
+  dataSourceMembro!: MatTableDataSource<Membro>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -40,15 +42,25 @@ export class DashboardComponent implements OnInit {
 
   getMembros() {
     this._membroService.getMembros().subscribe({
-      next: (res) => {
-        console.log('Membros recebidos:', res);
-        this.membros   = [...res]; 
+      next: (res: any) => {
+        console.log('Dados recebidos:', res);
+        
+        this.membros = res.membros.map((membro: Membro) => {
+          const ministerio = this.ministerios.find(
+            (min) => min.id === membro.ministerio_id
+          );
+          return {
+            ...membro,
+            ministerio_nome: ministerio ? ministerio.nome : 'Não definido', 
+          };
+        });
+        this.dataSourceMembro = new MatTableDataSource(this.membros);
+        this.dataSourceMembro.paginator = this.paginator;
+        this.dataSourceMembro.sort = this.sort;
       },
-      error: (error) => {
-        this._snackBarService.showErrorSnackbar(
-          'Erro ao obter os dados dos membros'
-        );
-        console.log(error);
+      error: (err) => {
+        console.error('Error fetching members:', err);
+        this._snackBarService.showErrorSnackbar('Failed to load members!');
       },
     });
   }
@@ -61,11 +73,11 @@ export class DashboardComponent implements OnInit {
   
           this.ministerios = res.ministerios || [];
   
-          this.dataSource = new MatTableDataSource(this.ministerios);
+          this.dataSourceMinisterio = new MatTableDataSource(this.ministerios);
   
           setTimeout(() => {
-            this.dataSource.sort = this.sort;
-            this.dataSource.paginator = this.paginator;
+            this.dataSourceMinisterio.sort = this.sort;
+            this.dataSourceMinisterio.paginator = this.paginator;
           });
         },
         error: (error: any) => {
@@ -77,10 +89,10 @@ export class DashboardComponent implements OnInit {
 
     filtrarMinisterio(event: Event) {
       const filterValue = (event.target as HTMLInputElement).value;
-      this.dataSource.filter = filterValue.trim().toLowerCase();
+      this.dataSourceMinisterio.filter = filterValue.trim().toLowerCase();
   
-      if (this.dataSource.paginator) {
-        this.dataSource.paginator.firstPage();
+      if (this.dataSourceMinisterio.paginator) {
+        this.dataSourceMinisterio.paginator.firstPage();
       }
     }
 }

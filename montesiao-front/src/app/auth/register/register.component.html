@@ -1,110 +1,163 @@
-<div class="body">
+<div class="modern-form">
+  <div class="form-title">{{ titulo }}</div>
   <form [formGroup]="form">
-    <div class="register">
-      <mat-card>
-        <div class="titulo-form">
-          <mat-toolbar>
-            <span> {{ titulo }}</span>
-          </mat-toolbar>
+    <div class="form-body">
+      <!-- Nome -->
+      <div class="input-group">
+        <div class="input-wrapper">
+          <svg fill="none" viewBox="0 0 24 24" class="input-icon">
+            <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M5 20c0-2.7614 3.134-5 7-5s7 2.2386 7 5" stroke="currentColor" stroke-width="1.5"/>
+          </svg>          
+          <input
+            required
+            type="text"
+            placeholder="Nome"
+            formControlName="nome"
+            class="form-input"
+          />
         </div>
-        <br />
-        <mat-card-content>
-          <div class="row">
-            <div class="col-md-12">
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Nome</mat-label>
-                <input matInput formControlName="nome" required />
-              </mat-form-field>
-            </div>
-          </div>
+      </div>
 
-          <div class="row">
-            <div class="col-md-12">
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Sobrenome</mat-label>
-                <input matInput formControlName="sobrenome" required />
-              </mat-form-field>
-            </div>
-          </div>
+      <!-- Sobrenome -->
+      <div class="input-group">
+        <div class="input-wrapper">
+          <svg fill="none" viewBox="0 0 24 24" class="input-icon">
+            <path d="M16 2H8C6.89543 2 6 2.89543 6 4v16c0 1.1046 0.89543 2 2 2h8c1.1046 0 2-0.8954 2-2V4c0-1.10457-0.8954-2-2-2Z" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M9 10h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M9 14h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>          
+          <input
+            required
+            type="text"
+            placeholder="Sobrenome"
+            formControlName="sobrenome"
+            class="form-input"
+          />
+        </div>
+      </div>
 
-          <div class="row">
-            <div class="col-md-12">
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Email</mat-label>
-                <input matInput formControlName="email" required />
-              </mat-form-field>
-            </div>
-          </div>
+      <!-- Email -->
+      <div class="input-group">
+        <div class="input-wrapper">
+          <svg fill="none" viewBox="0 0 24 24" class="input-icon">
+            <path
+              stroke-width="1.5"
+              stroke="currentColor"
+              d="M3 8L10.8906 13.2604C11.5624 13.7083 12.4376 13.7083 13.1094 13.2604L21 8M5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19Z"
+            ></path>
+          </svg>
+          <input
+            required
+            type="email"
+            placeholder="Email"
+            formControlName="email"
+            class="form-input"
+          />
+        </div>
+      </div>
 
-          <div class="row">
-            <div class="col-md-12">
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Senha</mat-label>
-                <input
-                  matInput
-                  formControlName="senha"
-                  [type]="hide ? 'password' : 'text'"
-                />
-                <button
-                  mat-icon-button
-                  matSuffix
-                  (click)="hide = !hide"
-                  [attr.aria-label]="'Hide senha'"
-                  [attr.aria-pressed]="hide"
-                >
-                  <mat-icon>{{
-                    hide ? "visibility_off" : "visibility"
-                  }}</mat-icon>
-                </button>
-                @if(senha!.hasError('invalidsenha')){
-                <mat-error>
-                  A senha deve conter pelo menos um número, uma letra maiúscula e um caracter especial!</mat-error
-                >
+      <!-- Senha -->
+      <div class="input-group">
+        <div class="input-wrapper">
+          <svg fill="none" viewBox="0 0 24 24" class="input-icon">
+            <path
+              stroke-width="1.5"
+              stroke="currentColor"
+              d="M12 10V14M8 6H16C17.1046 6 18 6.89543 18 8V16C18 17.1046 17.1046 18 16 18H8C6.89543 18 6 17.1046 6 16V8C6 6.89543 6.89543 6 8 6Z"
+            ></path>
+          </svg>
+          <input
+            required
+            [type]="hide ? 'password' : 'text'"
+            placeholder="Senha"
+            formControlName="senha"
+            class="form-input"
+          />
+          <button
+            class="password-toggle"
+            type="button"
+            (click)="hide = !hide"
+          >
+            <svg fill="none" viewBox="0 0 24 24" class="eye-icon">
+              <path
+                stroke-width="1.5"
+                stroke="currentColor"
+                d="M2 12C2 12 5 5 12 5C19 5 22 12 22 12C22 12 19 19 12 19C5 19 2 12 2 12Z"
+              ></path>
+              <circle
+                stroke-width="1.5"
+                stroke="currentColor"
+                r="3"
+                cy="12"
+                cx="12"
+              ></circle>
+            </svg>
+          </button>
+        </div>
+        <div
+        *ngIf="senha?.touched && senha?.invalid && senha?.hasError('invalidsenha')"
+        style="color: #ef4444; font-size: 12px; margin-top: 4px;"
+        >
+          * A senha deve conter pelo menos um número, uma letra maiúscula e um caracter especial! *
+      </div>
+      </div>
 
-                }
-              </mat-form-field>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-12">
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Confirmação de Senha</mat-label>
-                <input
-                  matInput
-                  formControlName="confirmacao"
-                  [type]="hideConfirmacao ? 'password' : 'text'"
-                />
-                <button
-                  mat-icon-button
-                  matSuffix
-                  (click)="hideConfirmacao = !hideConfirmacao"
-                  [attr.aria-label]="'Hide2 confirmacao'"
-                  [attr.aria-pressed]="hideConfirmacao"
-                >
-                  <mat-icon>{{
-                    hideConfirmacao ? "visibility_off" : "visibility"
-                  }}</mat-icon>
-                </button>
-              </mat-form-field>
-            </div>
-          </div>
-
-          <div class="text-center">
-            <button
-              (click)="guardarForm()"
-              mat-raised-button
-              color="primary"
-              [disabled]="!form.dirty || form.invalid || form.pending"
-            >
-              Cadastrar
-            </button>
-            <button (click)="redireccionar()" mat-raised-button color="warn">
-              Cancelar
-            </button>
-          </div>
-        </mat-card-content>
-      </mat-card>
+      <!-- Confirmar Senha -->
+      <div class="input-group">
+        <div class="input-wrapper">
+          <svg fill="none" viewBox="0 0 24 24" class="input-icon">
+            <path stroke="currentColor" stroke-width="1.5" d="M12 10V14"/>
+            <path stroke="currentColor" stroke-width="1.5" d="M8 6H16C17.1046 6 18 6.8954 18 8V16C18 17.1046 17.1046 18 16 18H8C6.89543 18 6 17.1046 6 16V8C6 6.8954 6.89543 6 8 6Z"/>
+            <path stroke="currentColor" stroke-width="1.5" d="M9.5 13.5l1.5 1.5 3.5-3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>          
+          <input
+            required
+            [type]="hideConfirmacao ? 'password' : 'text'"
+            placeholder="Confirmar Senha"
+            formControlName="confirmacao"
+            class="form-input"
+          />
+          <button
+            class="password-toggle"
+            type="button"
+            (click)="hideConfirmacao = !hideConfirmacao"
+          >
+            <svg fill="none" viewBox="0 0 24 24" class="eye-icon">
+              <path
+                stroke-width="1.5"
+                stroke="currentColor"
+                d="M2 12C2 12 5 5 12 5C19 5 22 12 22 12C22 12 19 19 12 19C5 19 2 12 2 12Z"
+              ></path>
+              <circle
+                stroke-width="1.5"
+                stroke="currentColor"
+                r="3"
+                cy="12"
+                cx="12"
+              ></circle>
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
+
+    <button
+      (click)="guardarForm()"
+      type="submit"
+      class="submit-button"
+      [disabled]="!form.dirty || form.invalid || form.pending"
+    >
+      <span class="button-text">Cadastrar</span>
+      <div class="button-glow"></div>
+    </button>
+    <button
+      type="button"
+      (click)="redireccionar()"
+      class="submit-button"
+      style="background: #ef4444; margin-top: 10px;"
+    >
+      Cancelar
+    </button>
   </form>
 </div>

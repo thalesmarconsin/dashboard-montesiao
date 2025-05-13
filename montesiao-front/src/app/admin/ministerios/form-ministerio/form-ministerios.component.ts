@@ -31,7 +31,7 @@ export class FormMinisteriosComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
-    private _snackBarService: SnackbarService,
+   private _snackBarService: SnackbarService, 
     private _ministerioService: MinisterioService
   ) {
     this.form = this._formBuilder.group({

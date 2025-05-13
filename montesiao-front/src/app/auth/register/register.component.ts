@@ -13,11 +13,12 @@ import { SnackbarService } from '../../shared/services/snackbar.service';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
 import { AdministradorService } from '../../core/services/administrador.service';
 import { Administrador } from '../../core/models/administrador.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [MaterialModule, SharedModule],
+  imports: [MaterialModule, SharedModule, CommonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
   styles: ``,
@@ -78,6 +79,7 @@ export class RegisterComponent implements OnInit {
   }
 
   guardarForm() {
+    console.log('guardarForm chamado');
     const { nome, sobrenome, email, senha, confirmacao } =
       this.form.value;
     const admin: Administrador = {
